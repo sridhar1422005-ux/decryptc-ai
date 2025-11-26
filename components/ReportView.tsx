@@ -11,8 +11,8 @@ interface ReportViewProps {
 const COLORS = {
   high: '#ff003c', // neon-red
   medium: '#f59e0b', // amber-500
-  low: '#0aff64',   // neon-green
-  neutral: '#475569' // slate-600
+  low: '#FFE600',   // brand-yellow (replacing neon-green for low risk usually, but user wants yellow theme. Keeping green for 'good' result but yellow for branding)
+  safe: '#0aff64'
 };
 
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
@@ -32,7 +32,7 @@ export const ReportView: React.FC<ReportViewProps> = ({ report, onReset }) => {
     switch (risk) {
       case 'HIGH': return 'text-neon-red border-neon-red shadow-[0_0_15px_rgba(255,0,60,0.3)]';
       case 'MEDIUM': return 'text-amber-400 border-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.3)]';
-      case 'LOW': return 'text-neon-green border-neon-green shadow-[0_0_15px_rgba(10,255,100,0.3)]';
+      case 'LOW': return 'text-brand-yellow border-brand-yellow shadow-[0_0_15px_rgba(255,230,0,0.3)]'; // Using brand yellow for low risk highlights
       default: return 'text-slate-400 border-slate-400';
     }
   };
@@ -49,9 +49,11 @@ export const ReportView: React.FC<ReportViewProps> = ({ report, onReset }) => {
     { name: 'Uncertainty', value: 100 - report.confidence_score }
   ];
 
+  // Logic: Pirated = Red, Original = Green, Inconclusive = Yellow (or standard colors)
+  // To stick to yellow theme: we use yellow as a primary accent, but verdict colors should likely remain semantic (Red/Green/Orange)
   const verdictColor = 
     report.verdict === Verdict.PIRATED ? COLORS.high : 
-    report.verdict === Verdict.ORIGINAL ? COLORS.low : COLORS.medium;
+    report.verdict === Verdict.ORIGINAL ? COLORS.safe : COLORS.medium;
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in pb-20">
@@ -111,13 +113,13 @@ export const ReportView: React.FC<ReportViewProps> = ({ report, onReset }) => {
         
         {/* Key Evidence */}
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
-          <h3 className="text-lg font-mono text-neon-blue mb-6 flex items-center gap-2">
+          <h3 className="text-lg font-mono text-brand-yellow mb-6 flex items-center gap-2">
             <FileWarning className="w-5 h-5" /> KEY EVIDENCE
           </h3>
           <ul className="space-y-4">
             {report.key_evidence.map((evidence, i) => (
               <li key={i} className="flex gap-3 text-sm text-slate-300 group">
-                <span className="text-neon-blue font-mono mt-1">0{i + 1}</span>
+                <span className="text-brand-yellow font-mono mt-1">0{i + 1}</span>
                 <span className="group-hover:text-white transition-colors">{evidence}</span>
               </li>
             ))}
@@ -126,7 +128,7 @@ export const ReportView: React.FC<ReportViewProps> = ({ report, onReset }) => {
 
         {/* Engine Correlation Chart */}
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
-          <h3 className="text-lg font-mono text-neon-blue mb-6 flex items-center gap-2">
+          <h3 className="text-lg font-mono text-brand-yellow mb-6 flex items-center gap-2">
             <ExternalLink className="w-5 h-5" /> CROSS-ENGINE CORRELATION
           </h3>
           <div className="h-64 w-full">
@@ -163,7 +165,7 @@ export const ReportView: React.FC<ReportViewProps> = ({ report, onReset }) => {
            <div className="space-y-3">
              {report.recommended_actions.map((action, i) => (
                <div key={i} className="flex items-start gap-3 text-sm text-slate-300">
-                  <ArrowRight className="w-4 h-4 text-neon-blue mt-1 shrink-0" />
+                  <ArrowRight className="w-4 h-4 text-brand-yellow mt-1 shrink-0" />
                   <span>{action}</span>
                </div>
              ))}
@@ -174,7 +176,7 @@ export const ReportView: React.FC<ReportViewProps> = ({ report, onReset }) => {
       <div className="flex justify-center pt-8">
         <button 
           onClick={onReset}
-          className="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white font-mono rounded border border-slate-600 transition-all hover:border-neon-blue"
+          className="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white font-mono rounded border border-slate-600 transition-all hover:border-brand-yellow"
         >
           START NEW SCAN
         </button>

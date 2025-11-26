@@ -1,5 +1,5 @@
 {
-  "name": " Decryptc AI Scanner",
+  "name": "Decryptc - AI Forensic Piracy Scanner",
   "description": "A forensic-grade AI piracy scanner that analyzes images and web footprints to detect unauthorized usage and generate detailed authenticity reports.",
   "requestFramePermissions": []
 }

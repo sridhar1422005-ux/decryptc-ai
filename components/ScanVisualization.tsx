@@ -60,7 +60,7 @@ export const ScanVisualization: React.FC<ScanVisualizationProps> = ({ onComplete
         {/* Animated Background Scan Line */}
         <div className="scan-line absolute inset-0 pointer-events-none z-0"></div>
 
-        <h2 className="text-xl font-mono text-neon-blue mb-6 relative z-10 flex items-center gap-2">
+        <h2 className="text-xl font-mono text-brand-yellow mb-6 relative z-10 flex items-center gap-2">
            <Cpu className="animate-pulse" /> SYSTEM DIAGNOSTICS RUNNING...
         </h2>
 
@@ -69,7 +69,7 @@ export const ScanVisualization: React.FC<ScanVisualizationProps> = ({ onComplete
             <div key={step.id} className="flex items-center gap-4">
               <div className={`
                 w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-300
-                ${step.status === 'complete' ? 'bg-neon-blue/20 border-neon-blue text-neon-blue' : 
+                ${step.status === 'complete' ? 'bg-brand-yellow/20 border-brand-yellow text-brand-yellow' : 
                   step.status === 'active' ? 'bg-slate-800 border-white/50 text-white animate-pulse' : 
                   'bg-slate-800 border-slate-700 text-slate-600'}
               `}>
@@ -82,15 +82,15 @@ export const ScanVisualization: React.FC<ScanVisualizationProps> = ({ onComplete
                   </span>
                   <span className={`
                     uppercase text-xs tracking-wider
-                    ${step.status === 'complete' ? 'text-neon-blue' : 
-                      step.status === 'active' ? 'text-amber-400' : 'text-slate-600'}
+                    ${step.status === 'complete' ? 'text-brand-yellow' : 
+                      step.status === 'active' ? 'text-white' : 'text-slate-600'}
                   `}>
                     {step.status === 'active' ? 'PROCESSING' : step.status}
                   </span>
                 </div>
                 {/* Progress Bar for individual step */}
                 <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
-                  <div className={`h-full bg-neon-blue transition-all duration-1000 ease-out ${
+                  <div className={`h-full bg-brand-yellow transition-all duration-1000 ease-out ${
                     step.status === 'complete' ? 'w-full' : 
                     step.status === 'active' ? 'w-1/2' : 'w-0'
                   }`} />
